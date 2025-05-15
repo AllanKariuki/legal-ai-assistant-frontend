@@ -101,7 +101,7 @@ import ActionButton from "./ActionButton";
 import remarkGfm from 'remark-gfm';
 import 'github-markdown-css/github-markdown-light.css';
 
-const TYPING_SPEED = 15; // milliseconds between each character
+const TYPING_SPEED = 15;
 
 const MessageContent = ({ response, isLoading = false }) => {
   const [displayedText, setDisplayedText] = useState("");
@@ -122,7 +122,7 @@ const MessageContent = ({ response, isLoading = false }) => {
 
     content = content.replace(/,\s*$/, '').trim().replace(/\n\s*$/, '');
     setFullText(content);
-    setDisplayedText(""); // Reset on new response
+    setDisplayedText(""); 
   }, [response, isLoading]);
 
   useEffect(() => {
@@ -167,7 +167,7 @@ const MessageContent = ({ response, isLoading = false }) => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6">
-        <div className="markdown-body">
+        <div className="markdown-body bg-gray-50 rounded-lg shadow-md p-5">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {displayedText || "No valid content to display."}
           </ReactMarkdown>
