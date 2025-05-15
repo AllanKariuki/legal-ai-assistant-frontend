@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import ActionButton from "./ActionButton";
 import remarkGfm from 'remark-gfm';
 import 'github-markdown-css/github-markdown-light.css';
+import { ThumbsUp, ThumbsDown, Copy } from 'lucide-react';
 
 const TYPING_SPEED = 15;
 
@@ -93,12 +94,15 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
       {/* Only show action buttons when typing is complete and not hidden */}
       {!hideActions && typingComplete && (
         <div className="flex flex-wrap gap-3 mb-6 border-t border-gray-200 pt-4">
-          <ActionButton variant="pink">Translate</ActionButton>
+          <Copy className='text-gray-500 w-6 h-6' />
+          <ThumbsUp className='text-green-500 w-6 h-6' />
+          <ThumbsDown className='text-red-500 w-6 h-6' />
+          {/* <ActionButton variant="pink">Translate</ActionButton>
           <ActionButton variant="primary">Improve</ActionButton>
           <ActionButton variant="blue">Explain</ActionButton>
           <ActionButton variant="indigo">Make longer</ActionButton>
           <ActionButton variant="secondary">Make shorter</ActionButton>
-          <ActionButton variant="secondary">Summarize</ActionButton>
+          <ActionButton variant="secondary">Summarize</ActionButton> */}
         </div>
       )}
     </div>
