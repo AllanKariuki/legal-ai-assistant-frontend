@@ -131,7 +131,9 @@ export default function Home() {
       handleSendPrompt();
     }
   };
-
+  const handleNewConversation = () => {
+    resetConversation();
+  }
   const resetConversation = () => {
     setMessages([]);
     setConversationTitle('');
@@ -141,7 +143,7 @@ export default function Home() {
 
   return (
     <div className="h-screen overflow-y-scroll flex flex-col bg-gray-50">
-      <Header />
+      <Header newChatClick={handleNewConversation} />
       <div className="max-w-5xl mx-auto h-screen flex flex-col px-4">
            
         {taskOpen && (
