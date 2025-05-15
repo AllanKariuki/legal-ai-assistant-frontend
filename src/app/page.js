@@ -56,7 +56,7 @@ export default function Home() {
          {/* Add flex-grow to push the content to the bottom */}
         <div className="flex-grow"></div>
         <div className="w-full">
-          <div className={`rounded-lg shadow-md text-gray-800 mb-10`}>
+          <div className="text-gray-800 mb-10">
             <MessageContent response={response} isLoading={isLoading} />
           </div>
         
