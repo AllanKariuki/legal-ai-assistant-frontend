@@ -120,8 +120,58 @@ export default function Home() {
   const [messages, setMessages] = useState([]); // Array of {type: 'user'|'ai', content: string, timestamp: number}
   const [taskOpen, setTaskOpen] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
+  const [conversationTitle, setConversationTitle] = useState("");
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const generateconversationTitle = (firstUserMessage) => {
+    if (!firstUserMessage) return "New Legal Consultation";
+
+    const message = firstUserMessage.toLowerCase();
+
+    const topicMappings = {
+      'contract': "Contract Law consultations",
+      'property': "Property Law Discussion",
+      'employment': "employment Law Query",
+      'criminal': "Criminal Law discussion",
+      'family': "Family Law Consultation",
+      'business': "Business Law Consultation",
+      'intellectual property': 'IP Law Consultation',
+      'tort': 'Tort Law Discussion',
+      'constitutional': 'Constitutional Law Query',
+      'divorce': 'Divorce Law Consultation',
+      'accident': 'Personal Injury Consultation',
+      'will': 'Estate Planning Discussion',
+      'lease': 'Tenancy Law Consultation',
+      'dispute': 'Legal Dispute Advisory',
+      'rights': 'Rights Advisory',
+      'liability': 'Liability Law Discussion',
+      'evidence': 'Evidence Law Query',
+      'appeal': 'Appeals Process Consultation',
+      'court': 'Court Procedure Query',
+      'fine': 'Legal Penalty Discussion',
+      'injunction': 'Injunction Law Consultation',
+      'marriage': 'Marriage Law Discussion',
+      'adoption': 'Adoption Law Consultation',
+      'child custody': 'Child Custody Law Query',
+      'bankruptcy': 'Bankruptcy Law Consultation',
+      'insurance': 'Insurance Law Discussion',
+      'tax': 'Tax Law Consultation',
+    };
+
+    for ( const [keyword, title ] of Object.entries(topicMappings) ) {
+      if (message.includes(keyword)) {
+        return title;
+      }
+    }
+
+    const words = firstUserMessage.trim().split(' ');
+    if (words.length <= 3) {
+      return `Legal Query: ${firstUserMessage}`;
+    } else {
+      return `Query: ${words.slice(0, 4).join(' ')}...`;
+    }
+  };
 
   const handleSendPrompt = async () => {
     if (!prompt.trim()) return;
@@ -137,6 +187,11 @@ export default function Home() {
       };
       
       setMessages(prev => [...prev, userMessage]);
+
+      if (messages.length === 0) {
+        const title = generateconversationTitle(prompt);
+        setConversationTitle(title);
+      }
       
       // Clear the input but keep the current prompt for the task header
       setCurrentPrompt(prompt);
@@ -181,6 +236,13 @@ export default function Home() {
     }
   };
 
+  const resetConversation = () => {
+    setMessages([]);
+    setConversationTitle('');
+    setTaskOpen(false);
+    setPrompt('');
+  }
+
   return (
     <div className="h-screen overflow-y-scroll flex flex-col bg-gray-50">
       <Header />
@@ -188,7 +250,7 @@ export default function Home() {
            
         {taskOpen && (
           <TaskHeader
-            title={currentPrompt}
+            title={conversationTitle || 'Legal Consultation'}
             onClose={() => setTaskOpen(false)}
           />
         )}
@@ -198,7 +260,7 @@ export default function Home() {
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-gray-500 text-center">
-                <p className="text-lg mb-2">Start a conversation</p>
+                <p className="text-4xl mb-2">Start a conversation</p>
                 <p className="text-sm">Ask a legal question to get started</p>
               </div>
             </div>
@@ -208,7 +270,7 @@ export default function Home() {
                 <div key={index} className="w-full">
                   {message.type === 'user' ? (
                     <div className="flex justify-end mb-4">
-                      <div className="bg-gray-500 text-gray-800 p-4 rounded-lg max-w-xs sm:max-w-md lg:max-w-lg shadow-md">
+                      <div className="bg-gray-200 text-gray-800 p-4 rounded-xl max-w-xs sm:max-w-md lg:max-w-lg shadow-md">
                         <p className="text-sm">{message.content}</p>
                       </div>
                     </div>
