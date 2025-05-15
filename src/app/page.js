@@ -94,7 +94,7 @@ export default function Home() {
       setPrompt('');
       
       // Send request to API
-      const response = await axios.post("http://localhost:8000/api/query", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/query`, {
         query: userMessage.content,
       });
       
