@@ -182,9 +182,9 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
             {displayedText || "No valid content to display."}
           </ReactMarkdown>
           {/* Add a cursor effect while typing */}
-          {!typingComplete && (
+          {/* {!typingComplete && (
             <span className="inline-block w-2 h-4 bg-blue-500 animate-pulse ml-1"></span>
-          )}
+          )} */}
         </div>
       </div>
       
