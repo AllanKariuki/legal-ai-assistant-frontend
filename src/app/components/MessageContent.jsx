@@ -93,16 +93,10 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
       
       {/* Only show action buttons when typing is complete and not hidden */}
       {!hideActions && typingComplete && (
-        <div className="flex flex-wrap gap-3 mb-6 border-t border-gray-200 pt-4">
-          <Copy className='text-gray-500 w-6 h-6' />
-          <ThumbsUp className='text-green-500 w-6 h-6' />
-          <ThumbsDown className='text-red-500 w-6 h-6' />
-          {/* <ActionButton variant="pink">Translate</ActionButton>
-          <ActionButton variant="primary">Improve</ActionButton>
-          <ActionButton variant="blue">Explain</ActionButton>
-          <ActionButton variant="indigo">Make longer</ActionButton>
-          <ActionButton variant="secondary">Make shorter</ActionButton>
-          <ActionButton variant="secondary">Summarize</ActionButton> */}
+        <div className="flex flex-wrap gap-3 mb-6 border-t border-gray-200 pt-4 px-4">
+          <Copy className='text-gray-500 w-4 h-4 hover:cursor-pointer' />
+          <ThumbsUp className='text-gray-500 w-4 h-4 hover:cursor-pointer' />
+          <ThumbsDown className='text-gray-500 w-4 h-4 hover:cursor-pointer' />
         </div>
       )}
     </div>
