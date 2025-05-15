@@ -32,9 +32,7 @@ export default function Home() {
     }
   };
 
-  // useEffect(() => {
-  //   handleSendPrompt();
-  // })
+
   useEffect(() => {
     setResponse({
       response:
@@ -55,6 +53,7 @@ export default function Home() {
         )}
          {/* Add flex-grow to push the content to the bottom */}
         <div className="flex-grow"></div>
+
         <div className="w-full">
           <div className="text-gray-800 mb-10">
             <MessageContent response={response} isLoading={isLoading} />
