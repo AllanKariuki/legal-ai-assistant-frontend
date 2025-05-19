@@ -131,9 +131,11 @@ export default function Home() {
       handleSendPrompt();
     }
   };
+
   const handleNewConversation = () => {
     resetConversation();
   }
+  
   const resetConversation = () => {
     setMessages([]);
     setConversationTitle('');
