@@ -10,6 +10,7 @@ import ActionButton from "./components/ActionButton";
 import { Scale, Search, FileText, BookOpen, Clock } from "lucide-react";
 import { Send } from 'lucide-react';
 import axios from "axios";
+import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   // State for conversation management
@@ -144,8 +145,12 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen overflow-y-scroll flex flex-col bg-gray-50">
-      <Header newChatClick={handleNewConversation} />
+    <div className="h-screen overflow-y-scroll flex flex-row bg-gray-50">
+      <div>
+        <Header newChatClick={handleNewConversation} />
+        <Sidebar />
+      </div>
+      
       <div className="max-w-5xl mx-auto h-screen flex flex-col px-4">
            
         {taskOpen && (
