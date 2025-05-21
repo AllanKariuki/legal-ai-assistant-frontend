@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { get  } from '../api';
 
 const Sidebar = () => {
     const [conversations, setConversations] = useState([]);
@@ -9,9 +10,19 @@ const Sidebar = () => {
     const fetchConversations = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.
+            const response = await get('/conversations');
+            setConversations(response);
+        } catch (error) {
+            console.error('Error fetching conversations: ', error);
+            // Handle error (e.g., show a notification)
+        } finally {
+            setLoading(false);
         }
     }, []); 
+
+    useEffect(() => {
+        fetchConversations();
+    }, []);
 
     return (
         <div className="absolute p-3 bg-gray-80 text-gray-800 w-[15vw]">
