@@ -20,6 +20,7 @@ export default function Home() {
   const [conversationTitle, setConversationTitle] = useState("");
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [ conversationId, setConversationId ] =  useState(null);
 
   const generateconversationTitle = (firstUserMessage) => {
     if (!firstUserMessage) return "New Legal Consultation";
@@ -70,6 +71,23 @@ export default function Home() {
     }
   };
 
+  const fetchConversation = useCallback(async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/conversation/${conversationId}`);
+      setMessages(response.data.messages);
+      setConversationTitle(response.data.title);
+    } catch (error) {
+      console.error('Error fetching conversation: ', error);
+      // Handle error (e.g., show a notification)
+    }
+  }, [conversationId]);
+
+  useEffect(() => {
+    if (conversationId) {
+      fetchConversation();
+    }
+  }, [conversationId, fetchConversation]);
+
   const handleSendPrompt = async () => {
     if (!prompt.trim()) return;
     
@@ -97,6 +115,7 @@ export default function Home() {
       // Send request to API
       const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/query`, {
         query: userMessage.content,
+        conversationTitle: conversationTitle
       });
       
       // Add AI response to conversation
@@ -134,6 +153,9 @@ export default function Home() {
   };
 
   const handleNewConversation = () => {
+    setConversationId(null);
+    setConversationTitle('');
+    setMessages([]);
     resetConversation();
   }
   
