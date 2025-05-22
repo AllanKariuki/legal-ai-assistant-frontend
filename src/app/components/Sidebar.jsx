@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { get  } from '../api';
 import { useParams, useRouter } from 'next/navigation';
+import { AlignLeft } from 'lucide-react';
 
 const Sidebar = ({ onConversationSelect }) => {
     const router = useRouter();
