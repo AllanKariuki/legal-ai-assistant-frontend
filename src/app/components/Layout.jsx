@@ -13,7 +13,7 @@ const Layout = ({ children, onNewChat, onConversationSelect }) => {
     return (
         <div className="h-screen overflow-hidded flex flex-col bg-gray-50">
             {/* Header */}
-            <Header newChatClick={handleNewConversation} />
+            {/* <Header newChatClick={handleNewConversation} /> */}
             
             {/* Main content area */}
             <div className="flex-1 flex overflow-hidden">
