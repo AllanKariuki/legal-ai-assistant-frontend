@@ -262,3 +262,5 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
     )
 
 }
+
+export default ChatView;
