@@ -93,7 +93,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
 
     useEffect(() => {
         fetchConversation();
-    }, conversationId, fetchConversation);
+    }, [fetchConversation]);
 
     const handleSendPrompt = async () => {
         if (!prompt.trim()) return;
