@@ -107,12 +107,12 @@ const Sidebar = () => {
                                 <ul className='space-y-1'>
                                     {items.map(conv => (
                                         <li key={conv.id} className='w-full'>
-                                            <button className='w-full text-left px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors'>
+                                            <button className='w-full text-left flex flex-row justify-between px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors'>
                                                 <div className='truncate text-sm'>
                                                     {conv.title || 'Untitled Conversation'}
                                                 </div>
                                                 <div className='text-xs text-gray-500 mt-1'>
-                                                    {new Date(conv.created_at).toLocaleDateString([], {hour: '2-digit', minute: '2-digit'})}
+                                                    {new Date(conv.created_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', hour12: false})}
                                                 </div>
                                             </button>
                                         </li>
