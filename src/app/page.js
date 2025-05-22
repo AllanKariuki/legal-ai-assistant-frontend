@@ -10,6 +10,7 @@ import ActionButton from "./components/ActionButton";
 import { Scale, Search, FileText, BookOpen, Clock } from "lucide-react";
 import { Send } from 'lucide-react';
 import axios from "axios";
+import { post } from './api';
 import Sidebar from "./components/Sidebar";
 
 export default function Home() {
@@ -113,15 +114,16 @@ export default function Home() {
       setPrompt('');
       
       // Send request to API
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/query`, {
+      const response = await post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/query`, {
         query: userMessage.content,
         conversationTitle: conversationTitle
       });
+      setConversationId(response.conversation_id)
       
       // Add AI response to conversation
       const aiMessage = {
         type: 'ai',
-        content: response.data,
+        content: response.response,
         timestamp: Date.now()
       };
       
@@ -131,7 +133,7 @@ export default function Home() {
       setTaskOpen(true);
       
     } catch (error) {
-      console.error("Error sending prompt:", error);
+      console.log("Error sending prompt:", error);
       // Add error message to conversation
       const errorMessage = {
         type: 'ai',
