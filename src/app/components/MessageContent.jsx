@@ -14,7 +14,7 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
   const [typingComplete, setTypingComplete] = useState(false);
 
   useEffect(() => {
-    if (isLoading || !response?.response) {
+    if (isLoading || !response) {
       setDisplayedText("");
       setFullText("");
       setTypingComplete(false);
@@ -23,12 +23,12 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
 
     let content = "";
 
-    if (typeof response.response === "string") {
-      content = response.response;
-    } else if (typeof response.response === "object") {
-      content = JSON.stringify(response.response, null, 2);
+    if (typeof response === "string") {
+      content = response;
+    } else if (typeof response === "object") {
+      content = JSON.stringify(response, null, 2);
     } else {
-      content = String(response.response || "");
+      content = String(response || "");
     }
 
     content = content.replace(/,\s*$/, '').trim().replace(/\n\s*$/, '');
@@ -69,7 +69,7 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
     );
   }
 
-  if (!response || !response.response) {
+  if (!response || !response) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
         <div className="text-gray-500">No response available</div>
