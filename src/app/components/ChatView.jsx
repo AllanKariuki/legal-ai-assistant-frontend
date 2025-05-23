@@ -139,7 +139,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
 
             // Add AI response to conversation
             const aiMessage = {
-                type: 'ai',
+                role: 'ai',
                 content: response.response,
                 timeStamp: Date.now()
             }
@@ -150,7 +150,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
             console.error('Error sending prompt: ', error);
             // Add error message to the conversation
             const errorMessage = {
-                type: ai,
+                role: ai,
                 content: 'Sorry, there was an error processing your request. Please try again.',
                 timeStamp: Date.now()
             };
