@@ -8,7 +8,7 @@ import { ThumbsUp, ThumbsDown, Copy } from 'lucide-react';
 
 const TYPING_SPEED = 15;
 
-const MessageContent = ({ response, isLoading = false, hideActions = false }) => {
+const MessageContent = ({ response, isLoading = false, hideActions = false, disableTyping = false }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [fullText, setFullText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
@@ -39,6 +39,12 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
 
   useEffect(() => {
     if (!fullText) return;
+
+    if (disableTyping) {
+      setDisplayedText(fullText);
+      setTypingComplete(true);
+      return;
+    }
 
     let index = 0;
     const interval = setInterval(() => {
