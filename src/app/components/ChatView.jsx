@@ -16,6 +16,8 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log('ChatView mounted with conversationId:', conversationId);
+
     const generateConversationTitle = (firstUserMessage) => {
         if (!firstUserMessage) return "New Legal Consultation";
 
@@ -123,6 +125,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
             const response = await post(`/query`, {
                 query: userMessage.content,
                 conversationTitle: title,
+                conversation_id: conversationId
             });
 
             // If this is a new conversation, navigate to the conversation route
@@ -243,7 +246,8 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                          focus:outline-none 
                          focus:ring-1 focus:ring-blue-500 
                          focus:border-blue-500
-                         disabled:bg-gray-100 disabled:cursor-not-allowed"
+                         disabled:bg-gray-100 disabled:cursor-not-allowed 
+                         overflow-x-wrap"
                     />
                     <button 
                         className="absolute right-3 top-1/2 transform 
