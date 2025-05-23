@@ -103,7 +103,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
 
             // Add user message to the conversation immediately
             const userMessage = {
-                type: 'user',
+                role: 'user',
                 content: prompt,
                 timeStamp: Date.now()
             }
@@ -188,7 +188,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                     <div className="space-y-6">
                         {messages.map((message, index) => (
                             <div key={index} className="w-full">
-                                {message.type === 'user' ? (
+                                {message.role === 'user' ? (
                                     <div className="flex justify-end mb-4">
                                         <div className="bg-gray-200 text-gray-800 p-4 rounded-xl max-w-xs sm:max-w-md lg:max-w-lg shadow-md">
                                             <p className="text-sm">{message.content}</p>
