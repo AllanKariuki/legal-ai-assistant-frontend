@@ -1,24 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const Layout = ({ children, onNewChat, onConversationSelect }) => {
+    const [windowWidth, setWindowWidth] = useState(0);
+
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
     const handleNewConversation = () => {
         if (onNewChat) {
             onNewChat();
         }
     };
 
+    const isMidView = windowWidth <= 1024 && windowWidth > 768;
+
     return (
-        <div className="h-screen overflow-hidded flex flex-col bg-gray-50">
+        <div className="h-screen overflow-hidden flex flex-col bg-gray-50">
             {/* Header */}
-            {/* <Header newChatClick={handleNewConversation} /> */}
-            
+            {isMidView && (
+                <Header newChatClick={handleNewConversation} />
+            )}
+                        
             {/* Main content area */}
             <div className="flex-1 flex overflow-hidden">
                 {/* Sidebar */}
-                <Sidebar onConversationSelect={onConversationSelect} />
+                { !isMidView && (
+                    <Sidebar onConversationSelect={onConversationSelect} />
+                )}
                 
                 {/* Main content */}
                 <div className="flex-1 overflow-y-auto">
