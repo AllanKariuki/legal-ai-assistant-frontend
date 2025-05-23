@@ -15,6 +15,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
     const [conversationTitle, setConversationTitle] = useState('');
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [messageFromAPI, setMessageFromAPI] = useState(false);
 
     console.log('ChatView mounted with conversationId:', conversationId);
 
@@ -136,6 +137,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                 }
                 return; // Exit early as the route change will handle the rest
             }
+            setMessageFromAPI(true);
 
             // Add AI response to conversation
             const aiMessage = {
@@ -203,7 +205,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                                             <MessageContent
                                                 response={message.content}
                                                 isLoading={false}
-                                                disableTyping={conversationId !== null}
+                                                disableTyping={conversationId !== null && !messageFromAPI}
                                             />
                                         </div>
                                     </div>
@@ -219,7 +221,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                                     <MessageContent
                                         response={null}
                                         isLoading={true}
-                                        disableTyping={conversationId !== null}
+                                        disableTyping={conversationId !== null && !messageFromAPI}
                                     />
                                 </div>
                             </div>
