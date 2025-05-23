@@ -203,6 +203,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                                             <MessageContent
                                                 response={message.content}
                                                 isLoading={false}
+                                                disableTyping={conversationId !== null}
                                             />
                                         </div>
                                     </div>
@@ -216,8 +217,9 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                             <div className="flex justify-start">
                                 <div className="w-full max-w-4xl">
                                     <MessageContent
-                                        reponse={null}
+                                        response={null}
                                         isLoading={true}
+                                        disableTyping={conversationId !== null}
                                     />
                                 </div>
                             </div>
