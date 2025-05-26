@@ -36,13 +36,13 @@ const Layout = ({ children, onNewChat, onConversationSelect }) => {
             {/* Main content area */}
             <div className="flex-1 flex overflow-hidden">
                 {/* Sidebar */}
-                { !isMidView && (
+                <div className="hidden lg:block">
                     <Sidebar onConversationSelect={onConversationSelect} />
-                )}
+                </div>
                 
                 {/* Main content */}
                 <div className="flex-1 overflow-y-auto">
-                {children}
+                    {children}
                 </div>
             </div>
         </div>
