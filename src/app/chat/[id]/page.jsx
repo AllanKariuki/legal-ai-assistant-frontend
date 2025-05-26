@@ -13,7 +13,7 @@ export default function ChatPage() {
         setRefreshSidebar(prev => prev + 1);
     };
 
-    const handleconversaitionChange = (newConversationId) => {
+    const handleConversationChange  = (newConversationId) => {
         setRefreshSidebar(prev => prev + 1);
     };
 
@@ -28,7 +28,7 @@ export default function ChatPage() {
         >
             <ChatView
                 conversationId={conversationId}
-                onConversationChange={handleconversaitionChange}
+                onConversationChange={handleConversationChange}
             />
         </Layout>
     );
