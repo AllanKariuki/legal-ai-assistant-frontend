@@ -39,7 +39,7 @@ const Layout = ({ children, onNewChat, onConversationSelect }) => {
                 {/* Mobile overlay */}
                 {sidebarOpen && (
                     <div 
-                        className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+                        className="fixed inset-0 bg-gray-50 bg-opacity-10 z-10 md:hidden"
                         onClick={handleOverlayClick}
                     />
                 )}
@@ -50,6 +50,8 @@ const Layout = ({ children, onNewChat, onConversationSelect }) => {
                     md:translate-x-0 
                     transition-transform duration-300 ease-in-out
                     fixed md:relative 
+                    top-0 md:top-auto
+                    left-0 md:left-auto
                     z-50 md:z-auto
                     h-full
                     md:block
@@ -62,7 +64,7 @@ const Layout = ({ children, onNewChat, onConversationSelect }) => {
                 </div>
                 
                 {/* Main content */}
-                <div className="flex-1 min-w-0 overflow-y-auto md:ml-0">
+                <div className="flex-1 min-w-0 overflow-y-auto">
                     {children}
                 </div>
             </div>
