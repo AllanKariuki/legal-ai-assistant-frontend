@@ -15,6 +15,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
     const [conversationTitle, setConversationTitle] = useState('');
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isFetchingConversation, setIsFetchingConversation] = useState(false);
     const [messageFromAPI, setMessageFromAPI] = useState(false);
 
     console.log('ChatView mounted with conversationId:', conversationId);
@@ -72,6 +73,75 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
         }
     };
 
+    const ChatSkeleton = () => {
+        <div className='max-w-5xl mx-auto h-screen flex flex-col px-4 animate-pulse'>
+            {/* Task Header Skeleton */}
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4 mt-4">
+                <div className="flex justify-between items-center">
+                    <div className="h-6 bg-gray-200 rounded w-48"></div>
+                    <div className="w-6 h-6 bg-gray-200 rounded"></div>
+                </div>
+            </div>
+
+            {/* Messages Skeleton */}
+            <div className="flex-grow py-5">
+                <div className="space-y-6">
+                    {/* User message skeleton */}
+                    <div className="flex justify-end mb-4">
+                        <div className="bg-gray-200 p-4 rounded-xl max-w-xs sm:max-w-md lg:max-w-lg">
+                            <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+                            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                        </div>
+                    </div>
+
+                    {/* AI message skeleton */}
+                    <div className="flex justify-start">
+                        <div className="w-full max-w-4xl bg-white p-6 rounded-lg border border-gray-200">
+                            <div className="space-y-3">
+                                <div className="h-4 bg-gray-200 rounded w-full"></div>
+                                <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                                <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                                <div className="h-4 bg-gray-200 rounded w-full"></div>
+                                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Another user message skeleton */}
+                    <div className="flex justify-end mb-4">
+                        <div className="bg-gray-200 p-4 rounded-xl max-w-xs sm:max-w-md lg:max-w-lg">
+                            <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+                            <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+                        </div>
+                    </div>
+
+                    {/* Another AI message skeleton */}
+                    <div className="flex justify-start">
+                        <div className="w-full max-w-4xl bg-white p-6 rounded-lg border border-gray-200">
+                            <div className="space-y-3">
+                                <div className="h-4 bg-gray-200 rounded w-full"></div>
+                                <div className="h-4 bg-gray-200 rounded w-4/5"></div>
+                                <div className="h-4 bg-gray-200 rounded w-full"></div>
+                                <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Input section skeleton */}
+            <div className="w-full bg-gray-50 pt-4 pb-6 border-t border-gray-200">
+                <div className="flex justify-end mb-1">
+                    <div className="h-3 bg-gray-200 rounded w-64"></div>
+                </div>
+                <div className="relative">
+                    <div className="w-full h-12 bg-gray-200 rounded-full"></div>
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-gray-300 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    }
+
     const fetchConversation = useCallback(async () => {
         if (!conversationId) {
             // Reset state for new conversation
@@ -79,10 +149,12 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
             setConversationTitle('');
             setTaskOpen(false);
             setPrompt('');
+            setIsFetchingConversation(false);
             return;
         }
 
         try {
+            setIsFetchingConversation(true);
             const response = await get(`/conversations/${conversationId}`);
             setMessages(response.messages);
             setConversationTitle(response.title);
@@ -90,6 +162,8 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
         } catch (error) {
             console.error('Error fetching conversation: ', error);
             // Handle error (e.g., show a notification)
+        } finally {
+            setIsFetchingConversation(false);
         }
 
     }, [conversationId]);
@@ -152,7 +226,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
             console.error('Error sending prompt: ', error);
             // Add error message to the conversation
             const errorMessage = {
-                role: ai,
+                role: 'ai',
                 content: 'Sorry, there was an error processing your request. Please try again.',
                 timeStamp: Date.now()
             };
@@ -170,6 +244,10 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
         }
     };
 
+    if (isFetchingConversation) {
+        return <ChatSkeleton /> 
+    }
+
     return (
         <div className='max-w-5xl mx-auto h-screen flex flex-col px-4'>
             {taskOpen && (
@@ -185,7 +263,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                 {messages.length === 0 ? (
                     <div className="flex items-center justify-center h-full">
                         <div className="text-gray-500 text-center">
-                            <p className="text-4xl mb-2">Start a covnersation</p>
+                            <p className="text-4xl mb-2">Start a conversation</p>
                             <p className="text-sm">Ask a legal question to get started</p>
                         </div>
                     </div>
