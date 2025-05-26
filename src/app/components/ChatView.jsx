@@ -74,7 +74,8 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
     };
 
     const ChatSkeleton = () => {
-        <div className='max-w-5xl mx-auto h-screen flex flex-col px-4 animate-pulse'>
+        return (
+            <div className='max-w-5xl mx-auto h-screen flex flex-col px-4 animate-pulse'>
             {/* Task Header Skeleton */}
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4 mt-4">
                 <div className="flex justify-between items-center">
@@ -140,6 +141,7 @@ const ChatView = ({ conversationId = null, onConversationChange }) => {
                 </div>
             </div>
         </div>
+        )
     }
 
     const fetchConversation = useCallback(async () => {
