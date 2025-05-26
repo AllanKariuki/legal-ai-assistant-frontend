@@ -11,7 +11,7 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
 
     const [conversations, setConversations] = useState([]);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // Start with true
 
     const groupConversationsByDate = (conversations) => {
         const sections = {
@@ -86,31 +86,68 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
         }
     }
 
-    const grouped = groupConversationsByDate(conversations);
+    // Skeleton Loader Component
+    const SkeletonLoader = () => (
+        <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col flex-shrink-0 animate-pulse">
+            {/* Mobile close button skeleton */}
+            <div className="md:hidden flex justify-between items-center p-3 border-b border-gray-200">
+                <div className="h-6 bg-gray-200 rounded w-20"></div>
+                <div className="w-9 h-9 bg-gray-200 rounded-full"></div>
+            </div>
 
-    if (loading) {
-        return (
-            <div className='w-64 h-full bg-white border-r border-gray-200 p-3 flex-shrink-0'>
-                {/* Mobile close button */}
-                <div className="md:hidden flex justify-end mb-4">
-                    <button 
-                        onClick={onClose}
-                        className="p-2 hover:bg-gray-100 rounded-full"
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
+            {/* New Chat Button skeleton */}
+            <div className='p-3 border-b border-gray-200'>
+                <div className="w-full h-12 bg-gray-200 rounded-full"></div>
+            </div>
+
+            {/* Conversations List skeleton */}
+            <div className='flex-1 overflow-y-auto p-3'>
+                {/* Today section */}
+                <div className='mb-4'>
+                    <div className='h-4 bg-gray-200 rounded w-12 mb-2'></div>
+                    <div className='space-y-2'>
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="w-full p-3 rounded-lg bg-gray-50">
+                                <div className='h-4 bg-gray-200 rounded w-3/4 mb-2'></div>
+                                <div className='h-3 bg-gray-200 rounded w-1/3'></div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className='flex justify-center items-center h-32'>
-                    <div className='text-gray-500'>Loading conversations...</div>
-                    <div className="animate-pulse">
-                        <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
-                        <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                        <div className="h-4 bg-gray-200 rounded w-5/6 mb-2"></div>
-                        <div className="h-4 bg-gray-200 rounded w-4/6 mb-2"></div>
+
+                {/* Yesterday section */}
+                <div className='mb-4'>
+                    <div className='h-4 bg-gray-200 rounded w-16 mb-2'></div>
+                    <div className='space-y-2'>
+                        {[1, 2].map(i => (
+                            <div key={i} className="w-full p-3 rounded-lg bg-gray-50">
+                                <div className='h-4 bg-gray-200 rounded w-4/5 mb-2'></div>
+                                <div className='h-3 bg-gray-200 rounded w-1/4'></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* This week section */}
+                <div className='mb-4'>
+                    <div className='h-4 bg-gray-200 rounded w-20 mb-2'></div>
+                    <div className='space-y-2'>
+                        {[1].map(i => (
+                            <div key={i} className="w-full p-3 rounded-lg bg-gray-50">
+                                <div className='h-4 bg-gray-200 rounded w-2/3 mb-2'></div>
+                                <div className='h-3 bg-gray-200 rounded w-1/5'></div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-        );
+        </div>
+    );
+
+    const grouped = groupConversationsByDate(conversations);
+
+    if (loading) {
+        return <SkeletonLoader />;
     }
 
     if (error) {
