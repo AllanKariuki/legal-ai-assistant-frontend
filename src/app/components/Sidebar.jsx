@@ -153,11 +153,11 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
                     className="w-full flex items-center 
                         gap-2 bg-gray-200 
                         rounded-full text-white
-                        px-4 py-3 hover:cursor-pointer hover:bg-blue-700 transition-colors" 
+                        px-4 py-3 hover:cursor-pointer hover:shadow-md hover:bg-blue-50 transition-colors" 
                         onClick={handleNewChat}
                     >
                         <AlignLeft className="w-5 h-5 text-gray-500" />
-                        <span className="text-black">New chat</span>
+                        <span className="text-gray-600">New chat</span>
                 </button>
             </div>
 
