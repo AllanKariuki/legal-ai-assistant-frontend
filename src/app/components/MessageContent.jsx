@@ -8,13 +8,13 @@ import { ThumbsUp, ThumbsDown, Copy } from 'lucide-react';
 
 const TYPING_SPEED = 15;
 
-const MessageContent = ({ response, isLoading = false, hideActions = false }) => {
+const MessageContent = ({ response, isLoading = false, hideActions = false, disableTyping = false }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [fullText, setFullText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
 
   useEffect(() => {
-    if (isLoading || !response?.response) {
+    if (isLoading || !response) {
       setDisplayedText("");
       setFullText("");
       setTypingComplete(false);
@@ -23,12 +23,12 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
 
     let content = "";
 
-    if (typeof response.response === "string") {
-      content = response.response;
-    } else if (typeof response.response === "object") {
-      content = JSON.stringify(response.response, null, 2);
+    if (typeof response === "string") {
+      content = response;
+    } else if (typeof response === "object") {
+      content = JSON.stringify(response, null, 2);
     } else {
-      content = String(response.response || "");
+      content = String(response || "");
     }
 
     content = content.replace(/,\s*$/, '').trim().replace(/\n\s*$/, '');
@@ -39,6 +39,12 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
 
   useEffect(() => {
     if (!fullText) return;
+
+    if (disableTyping) {
+      setDisplayedText(fullText);
+      setTypingComplete(true);
+      return;
+    }
 
     let index = 0;
     const interval = setInterval(() => {
@@ -69,7 +75,7 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
     );
   }
 
-  if (!response || !response.response) {
+  if (!response) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
         <div className="text-gray-500">No response available</div>
@@ -84,10 +90,6 @@ const MessageContent = ({ response, isLoading = false, hideActions = false }) =>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {displayedText || "No valid content to display."}
           </ReactMarkdown>
-          {/* Add a cursor effect while typing */}
-          {/* {!typingComplete && (
-            <span className="inline-block w-2 h-4 bg-blue-500 animate-pulse ml-1"></span>
-          )} */}
         </div>
       </div>
       
