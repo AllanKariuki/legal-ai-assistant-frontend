@@ -135,7 +135,10 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
     return (
         <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
             {/* Mobile close button */}
-            <div className="md:hidden flex justify-end p-3 border-b border-gray-200">
+            <div className="md:hidden flex justify-between items-center p-3 border-b border-gray-200">
+                <div className="text-xl font-semibold text-gray-800">
+                    Legal AI
+                </div>
                 <button 
                     onClick={onClose}
                     className="p-2 hover:bg-gray-100 rounded-full"
