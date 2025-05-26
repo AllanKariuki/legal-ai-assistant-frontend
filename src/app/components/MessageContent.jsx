@@ -75,7 +75,7 @@ const MessageContent = ({ response, isLoading = false, hideActions = false, disa
     );
   }
 
-  if (!response || !response) {
+  if (!response) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
         <div className="text-gray-500">No response available</div>
