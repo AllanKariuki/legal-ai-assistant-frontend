@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { get  } from '../api';
+import { get } from '../api';
 import { useParams, useRouter } from 'next/navigation';
-import { AlignLeft } from 'lucide-react';
+import { AlignLeft, X } from 'lucide-react';
 
-const Sidebar = ({ onConversationSelect }) => {
+const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
     const router = useRouter();
     const params = useParams();
     const currentConversationId = params?.id;
 
-
     const [conversations, setConversations] = useState([]);
     const [error, setError] = useState(null);
-    const [ loading, setLoading ] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const groupConversationsByDate = (conversations) => {
         const sections = {
@@ -85,14 +84,22 @@ const Sidebar = ({ onConversationSelect }) => {
         if (onConversationSelect) {
             onConversationSelect(null);
         }
-
     }
 
     const grouped = groupConversationsByDate(conversations);
 
     if (loading) {
         return (
-            <div className='w-64 h-full bg-white border-r border-gray-200 p-3'>
+            <div className='w-64 h-full bg-white border-r border-gray-200 p-3 flex-shrink-0'>
+                {/* Mobile close button */}
+                <div className="md:hidden flex justify-end mb-4">
+                    <button 
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
                 <div className='flex justify-center items-center h-32'>
                     <div className='text-gray-500'>Loading conversations...</div>
                 </div>
@@ -102,7 +109,16 @@ const Sidebar = ({ onConversationSelect }) => {
 
     if (error) {
         return (
-            <div className='absolute p-3 text-gray-800 w-64'>
+            <div className='w-64 h-full bg-white border-r border-gray-200 p-3 flex-shrink-0'>
+                {/* Mobile close button */}
+                <div className="md:hidden flex justify-end mb-4">
+                    <button 
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
                 <div className='text-red-500 p-2'>
                     {error}
                     <button 
@@ -117,12 +133,23 @@ const Sidebar = ({ onConversationSelect }) => {
     }
 
     return (
-        <div className="absolute p-3 text-gray-800 w-64 flex flex-col border-r border-gray-200 h-full hidden xl:block flex-shrink-0">
+        <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
+            {/* Mobile close button */}
+            <div className="md:hidden flex justify-end p-3 border-b border-gray-200">
+                <button 
+                    onClick={onClose}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* New Chat Button */}
             <div className='p-3 border-b border-gray-200'>
                 <button 
                     className="w-full flex items-center 
                         gap-2 bg-gray-200 
-                        spce-x-2 rounded-full text-white
+                        rounded-full text-white
                         px-4 py-3 hover:cursor-pointer hover:bg-blue-700 transition-colors" 
                         onClick={handleNewChat}
                     >
@@ -131,10 +158,10 @@ const Sidebar = ({ onConversationSelect }) => {
                 </button>
             </div>
 
+            {/* Conversations List */}
             <div className='flex-1 overflow-y-auto p-3'>
-                {/* Conversations list */}
                 {conversations.length === 0 ? (
-                    <div className='test-gray-500 italic text-sm'>
+                    <div className='text-gray-500 italic text-sm'>
                         No conversations found. Start a new conversation!
                     </div>
                 ) : (
@@ -145,7 +172,6 @@ const Sidebar = ({ onConversationSelect }) => {
                                     <h5 className='font-semibold text-sm text-gray-600 mb-2'>{section}</h5>
                                     <div className='space-y-1'>
                                         {items.map(conv => (
-                                            
                                             <button 
                                                 key={conv.id}
                                                 onClick={() => handleConversationClick(conv.id)}
@@ -153,7 +179,7 @@ const Sidebar = ({ onConversationSelect }) => {
                                                     ${currentConversationId === conv.id ? 'bg-blue-50 border-l-4 border-blue-500' : ''}
                                                     `}
                                                 >
-                                                    <div className='truncate text-sm font-medium'>
+                                                    <div className='truncate text-sm font-medium text-gray-600'>
                                                         {conv.title || 'Untitled Conversation'}
                                                     </div>
                                                     <div className='text-xs text-gray-500 mt-1'>
@@ -164,7 +190,6 @@ const Sidebar = ({ onConversationSelect }) => {
                                                         })}
                                                     </div>
                                             </button>
-                                            
                                         ))}
                                     </div>
                             </div> 
@@ -173,7 +198,6 @@ const Sidebar = ({ onConversationSelect }) => {
                     </ul>
                 )}
             </div>
-            
         </div>
     );
 };
