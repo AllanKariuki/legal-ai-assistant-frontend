@@ -22,10 +22,10 @@ const Header = ({ newChatClick, onToggleSidebar }) => {
                 {/* Mobile menu button - only show on smaller screens */}
                 <button
                     onClick={onToggleSidebar}
-                    className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
                     aria-label="Toggle sidebar"
                 >
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-5 h-5 text-gray-300" />
                 </button>
                 
                 {/* Logo/Brand */}
