@@ -102,6 +102,12 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
                 </div>
                 <div className='flex justify-center items-center h-32'>
                     <div className='text-gray-500'>Loading conversations...</div>
+                    <div className="animate-pulse">
+                        <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
+                        <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-5/6 mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-4/6 mb-2"></div>
+                    </div>
                 </div>
             </div>
         );
@@ -172,7 +178,7 @@ const Sidebar = ({ onConversationSelect, isOpen, onClose }) => {
                         {Object.entries(grouped).map(([section, items]) => 
                             items.length > 0 ? (
                             <div key={section} className=''>
-                                    <h5 className='font-semibold text-sm text-gray-600 mb-2'>{section}</h5>
+                                    <h5 className='font-light text-sm text-gray-400 mb-2'>{section}</h5>
                                     <div className='space-y-1'>
                                         {items.map(conv => (
                                             <button 
