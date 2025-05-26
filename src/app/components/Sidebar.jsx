@@ -117,7 +117,7 @@ const Sidebar = ({ onConversationSelect }) => {
     }
 
     return (
-        <div className="absolute p-3 text-gray-800 w-64 flex flex-col border-r border-gray-200 h-full">
+        <div className="absolute p-3 text-gray-800 w-64 flex flex-col border-r border-gray-200 h-full hidden lg:block flex-shrink-0">
             <div className='p-3 border-b border-gray-200'>
                 <button 
                     className="w-full flex items-center 
